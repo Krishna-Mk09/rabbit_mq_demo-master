@@ -30,7 +30,7 @@ public class UserController {
             user.setProductList(new ArrayList<>());
             User user1 = userService.addUser(user);
             responseEntity = new ResponseEntity<>(user1, HttpStatus.OK);
-        }catch (UserAlreadyExistException e){
+        } catch (UserAlreadyExistException e) {
             throw new UserAlreadyExistException();
         }
         return responseEntity;
@@ -39,9 +39,9 @@ public class UserController {
     @PutMapping("/user/addProduct/{userId}")
     public ResponseEntity<?> addProductForUser(@PathVariable(value = "userId") int userId, @RequestBody Product product) throws ProductAlreadyExistException {
 
-        try{
-            User user1=userService.addProductForUser(userId, product);
-            responseEntity=new ResponseEntity<>(user1,HttpStatus.OK);
+        try {
+            User user1 = userService.addProductForUser(userId, product);
+            responseEntity = new ResponseEntity<>(user1, HttpStatus.OK);
 
         } catch (ProductAlreadyExistException e) {
             throw new ProductAlreadyExistException();
@@ -51,37 +51,36 @@ public class UserController {
     }
 
     @GetMapping("/user/products/")
-    public ResponseEntity<?> fetchAllProducts()
-    {
-       // ResponseEntity responseEntity = null;
+    public ResponseEntity<?> fetchAllProducts() {
+        // ResponseEntity responseEntity = null;
         try {
-            responseEntity= new ResponseEntity<>(userService.getAllProducts(),HttpStatus.OK);
+            responseEntity = new ResponseEntity<>(userService.getAllProducts(), HttpStatus.OK);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return responseEntity;
     }
 
     @DeleteMapping("/user/product/{userId}/{productId}")
-    public ResponseEntity<?> deleteSingleUser(@PathVariable(value = "userId" ) int userId ,@PathVariable(value = "productId") int productId) throws UserNotFoundException {
+    public ResponseEntity<?> deleteSingleUser(@PathVariable(value = "userId") int userId, @PathVariable(value = "productId") int productId) throws UserNotFoundException {
 
 
-        try{
-            responseEntity = new ResponseEntity<>(userService.deleteUserAndProduct(userId,productId), HttpStatus.OK);
+        try {
+            responseEntity = new ResponseEntity<>(userService.deleteUserAndProduct(userId, productId), HttpStatus.OK);
 
-        }catch (UserNotFoundException e){
+        } catch (UserNotFoundException e) {
 
             throw new UserNotFoundException();
 
-        }catch (Exception e){
-            responseEntity=new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            responseEntity = new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return responseEntity;
     }
 
     @GetMapping("/user/getbyuserid/{userId}")
-    public ResponseEntity<?> findByUserId(@PathVariable int userId){
+    public ResponseEntity<?> findByUserId(@PathVariable int userId) {
         return new ResponseEntity<>(userService.getByUserId(userId), HttpStatus.OK);
     }
 }
